@@ -8,9 +8,11 @@
     "format:prettier": "yarn prettier --write ."
   },
   "dependencies": {
+    "@svgr/webpack": "^6.1.1",
     "next": "latest",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@types/react": "^17.0.37",
