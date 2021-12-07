@@ -5,19 +5,33 @@ module.exports = {
   theme: {
     container: {
       center: true,
+      screens: {
+        sm: '960px',
+        md: '960px',
+        xl: '960px',
+        '2xl': '960px'
+      }
     },
     extend: {
+      borderRadius: {
+        15: '3.75rem'
+      },
       colors: {
         'f7f8fc': '#F7F8FC',
         '222f40': '#222F40',
         '1b2533': '#1B2533',
+        'ea4e34': '#EA4E34',
+        '1a1b20': '#1A1B20',
         'fff': '#fff'
       },
       fontSize: {
+        16: '4rem',
         20: '5rem',
+        22: '5.5rem',
         24: '6rem',
       },
       lineHeight: {
+        24: '6rem',
         28: '7rem',
         32: '8rem',
       },

@@ -1,10 +1,10 @@
 import { Container } from "../components/layout/Container";
-import { Home } from "../views/Home";
+import { CreateAccount } from "../views/create-account";
 
 export default function Index() {
   return (
     <Container>
-      <Home />
+      <CreateAccount />
     </Container>
   )
 }
