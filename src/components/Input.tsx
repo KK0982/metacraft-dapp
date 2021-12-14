@@ -4,7 +4,7 @@ import styled from 'styled-components'
 interface InputProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
-    'value' | 'onChange' | 'pattern'
+    'value' | 'pattern'
   > {
   value?: string
   onUserInput?: (value: string) => void
@@ -13,11 +13,14 @@ interface InputProps
 }
 
 export const Input: FC<InputProps> = React.memo(
-  ({ className, value, onUserInput, pattern, ...rest }) => {
+  ({ className, value, onUserInput, pattern, onChange, ...rest }) => {
     const reg = useMemo(() => new RegExp(pattern), [pattern])
 
-    const onChange = useCallback(
+    const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
+        // if custom onChange function
+        onChange && onChange(e);
+
         const value = e.currentTarget.value
 
         if (!value || reg.test(value)) {
@@ -34,7 +37,7 @@ export const Input: FC<InputProps> = React.memo(
         <input
           value={value}
           {...rest}
-          onChange={onChange}
+          onChange={handleChange}
           className="text-16 leading-24 text-1b2533 placeholder-opacity-30"
         />
       </div>
