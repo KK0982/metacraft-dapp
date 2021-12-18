@@ -10,6 +10,8 @@ import Square from '/public/icons/square-three.svg'
 export const CreateAccount = React.memo(() => {
   const form = useCreateAccountForm()
 
+  console.log(form.errors.name);
+
   return (
     <Container>
       <section>
@@ -26,6 +28,7 @@ export const CreateAccount = React.memo(() => {
               id="name"
               name="name"
               value={form.values.name}
+              error={form.errors.name}
               onChange={(name: string) => form.setFieldValue('name', name)}
             />
             <Spacing y={32} />
@@ -43,3 +46,5 @@ export const CreateAccount = React.memo(() => {
     </Container>
   )
 })
+
+export default CreateAccount

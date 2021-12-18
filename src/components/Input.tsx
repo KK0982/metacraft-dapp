@@ -6,6 +6,7 @@ interface InputProps
     React.InputHTMLAttributes<HTMLInputElement>,
     'value' | 'pattern'
   > {
+  error?: string;
   value?: string
   onUserInput?: (value: string) => void
   pattern?: string
@@ -35,10 +36,11 @@ export const Input: FC<InputProps> = React.memo(
         className={`flex items-stretch h-48 min-w-[400px] bg-f7f8fc rounded-15 px-20 ${className}`}
       >
         <input
-          value={value}
           {...rest}
+          value={value}
           onChange={handleChange}
           className="text-16 leading-24 text-1b2533 placeholder-opacity-30"
+          autoComplete="new-password"
         />
       </div>
     )

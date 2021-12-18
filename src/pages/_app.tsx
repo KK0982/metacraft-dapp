@@ -5,20 +5,20 @@ import { Layout } from '../components/layout'
 import '../styles/global.css'
 import { store } from '../state'
 import { Web3Provider } from '../connector'
+import request from '../utils/request'
 
 function MyApp({ Component, pageProps }) {
   return (
     <Web3Provider>
-       <ReduxProvider store={store}>
-      <Head>
-        <title>Metacraft</title>
-      </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ReduxProvider>
+      <ReduxProvider store={store}>
+        <Head>
+          <title>Metacraft</title>
+        </Head>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ReduxProvider>
     </Web3Provider>
-   
   )
 }
 

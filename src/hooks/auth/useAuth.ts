@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import { useWeb3 } from '../connector'
-import { useActiveAccount, useConnectReadyStatus } from '../connector/hooks'
+import { useWeb3 } from '../../connector'
+import { useActiveAccount, useConnectReadyStatus } from '../../connector/hooks'
 
 export class NotConnectWalelt extends Error {
   constructor() {
@@ -16,10 +16,8 @@ export const useAuth = () => {
   const ready = useConnectReadyStatus()
 
   return useMemo(
-    () => async (name: string) => {
+    () => !address ||!web3 ? false : async (name: string) => {
       await ready.promise
-
-      if (!address || !web3) return
 
       const checksumAddress = web3.utils.toChecksumAddress(address)
       const timestamp = Math.floor(new Date().getTime() / 1000)
@@ -31,6 +29,7 @@ export const useAuth = () => {
       )
 
       return {
+        address,
         checksumAddress,
         timestamp,
         signature: signature.substring(2),

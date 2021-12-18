@@ -4,6 +4,7 @@ html {
   font-weight: 300;
 }
 
+/* clear default input style */
 input {
   border: none !important;
   outline: none !important;
