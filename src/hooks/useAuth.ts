@@ -1,56 +1,41 @@
-import Onboard from 'bnc-onboard'
 import { useMemo } from 'react'
-import Web3 from 'web3'
+import { useWeb3 } from '../connector'
+import { useActiveAccount, useConnectReadyStatus } from '../connector/hooks'
 
-let web3
-
-const onboard = (userName: string) =>
-  Onboard({
-    dappId: process.env.BLOCK_NATIVE_API_KEY, // [String] The API key created by step one above
-    networkId: 4, // [Integer] The Ethereum network ID your Dapp uses.
-    walletCheck: [
-      { checkName: 'accounts' },
-      { checkName: 'connect' },
-      { checkName: 'network' },
-    ],
-    subscriptions: {
-      wallet: (wallet) => {
-        web3 = new Web3(wallet.provider)
-      },
-      address: (address) => {
-        if (!address) return
-
-        const checksumAddress = web3.utils.toChecksumAddress(address)
-        const timestamp = Math.floor(new Date().getTime() / 1000)
-        const messageForSign = `${checksumAddress}|${userName}|${timestamp}`
-
-        web3.eth.personal
-          .sign(messageForSign, checksumAddress)
-          .then((signature: string) => {
-            const replacedSignature = signature.substring(2)
-
-            window.open(
-              `metacraft://?address=${checksumAddress}&timestamp=${timestamp}&signature=${replacedSignature}`
-            )
-          })
-          .catch(console.error)
-      },
-      network: (networkId) => {
-        console.log('networkId: ', networkId)
-      },
-    },
-  })
-
-const onBoard = async () => {
-  try {
-    await onboard.walletSelect()
-    await onboard.walletCheck()
-  } catch (e) {
-    console.error(e)
+export class NotConnectWalelt extends Error {
+  constructor() {
+    super()
+    this.name = 'NotConnect'
+    this.message = 'please connect the wallet first'
   }
 }
 
-export default onBoard
-
 export const useAuth = () => {
+  const address = useActiveAccount()
+  const web3 = useWeb3()
+  const ready = useConnectReadyStatus()
+
+  return useMemo(
+    () => async (name: string) => {
+      await ready.promise
+
+      if (!address || !web3) return
+
+      const checksumAddress = web3.utils.toChecksumAddress(address)
+      const timestamp = Math.floor(new Date().getTime() / 1000)
+      const messageForSign = `${checksumAddress}|${name}|${timestamp}`
+
+      const signature = await (web3.eth.personal as any).sign(
+        messageForSign,
+        checksumAddress
+      )
+
+      return {
+        checksumAddress,
+        timestamp,
+        signature: signature.substring(2),
+      }
+    },
+    [address, web3]
+  )
 }

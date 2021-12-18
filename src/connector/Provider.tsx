@@ -4,17 +4,22 @@ import { Web3ProviderContext } from './context';
 import { Web3ProviderData } from "./types";
 import bncOnBoard from 'bnc-onboard';
 import { API } from "bnc-onboard/dist/src/interfaces";
+import { Deffered } from "../utils/defered";
 
 type Action = { type: 'set-web3', data: Web3 }
 | { type: 'set-active-address', data: string };
 
-const INIT_STATE  = {} as Web3ProviderData;
+const INIT_STATE  = {
+  ready: new Deffered()
+} as Web3ProviderData;
 
 const DAPP_ID = process.env.BLOCK_NATIVE_API_KEY;
 
 const reducer = (state: Web3ProviderData, action: Action): Web3ProviderData => {
   switch(action.type) {
     case 'set-web3': {
+      state.ready.success();
+
       return {
         ...state,
         web3: action.data
@@ -44,7 +49,7 @@ export const Web3Provider = React.memo(({ children }) => {
       ],
       subscriptions: {
         wallet: (wallet) => {
-          dispatch({ type: 'set-web3', data: new Web3(wallet.provider )})
+          dispatch({ type: 'set-web3', data: new Web3(wallet.provider)})
         },
         address: (address) => {
           console.log(address)
