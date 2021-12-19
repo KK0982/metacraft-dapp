@@ -68,6 +68,7 @@ export const TagGroup: FC<TagGroupProps> = React.memo(
             if (!child) return null;
 
             return React.cloneElement(child, {
+              selected: value === child?.props?.value,
               onChange: onChange,
               active: child?.props?.value === value
             });

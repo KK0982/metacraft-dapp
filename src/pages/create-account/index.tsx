@@ -1,20 +1,65 @@
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useCallback, useMemo, useState } from 'react'
+import Button from '../../components/Button'
 import { Container } from '../../components/layout/Container'
 import { Spacing } from '../../components/Spacing'
+import { useRegistry } from '../../hooks/registry/useRegistry'
 import { FoodField } from './components/FoodField'
 import { NameField } from './components/NameField'
-import { SkinField } from './components/SkinField'
+import { Skin, SkinField } from './components/SkinField'
 import { useCreateAccountForm } from './hooks/useCreateAccountForm'
 import Square from '/public/icons/square-three.svg'
 
 export const CreateAccount = React.memo(() => {
   const form = useCreateAccountForm()
+  const [skin, setSkin] = useState<Skin>()
+  const { run: registry, loading } = useRegistry()
+  const router = useRouter()
 
-  console.log(form.errors.name);
+  const name = useMemo(() => {
+    return router.query?.name as string
+  }, [router])
+
+  const paramsFormUrl = useMemo(() => {
+    return {
+      address: router.query?.address as string,
+      timestamp: router.query?.timestamp as string,
+      signature: router.query?.signature as string,
+    }
+  }, [router])
+
+  const handleRegistry = useMemo(
+    () => async () => {
+      const errors = await form.validateForm()
+
+      if (errors.name || errors.food) return
+
+      if (
+        !paramsFormUrl.address ||
+        !paramsFormUrl.timestamp ||
+        !paramsFormUrl.signature
+      )
+        return
+
+      const result = await registry({
+        address: paramsFormUrl.address,
+        signature: paramsFormUrl.signature,
+        timestamp: Number(paramsFormUrl.timestamp),
+        username: form.values.name,
+        fruit: form.values.food,
+        skin: skin.name || 'default_1',
+      })
+
+      if (result.status === 200 && result.data.auth) {
+        router.replace(`/auth?name=${name}&type=registry-success`)
+      }
+    },
+    [router, registry, form, paramsFormUrl, skin, name]
+  )
 
   return (
     <Container>
-      <section>
+      <section className="mb-64">
         <p className="text-20 leading-28 mt-18 mb-20 text-center">
           This address is the first time to log in to metacraft.
         </p>
@@ -39,7 +84,19 @@ export const CreateAccount = React.memo(() => {
               onChange={(name: string) => form.setFieldValue('food', name)}
             />
             <Spacing y={32} />
-            <SkinField />
+            <SkinField value={skin} onChange={setSkin} />
+            <Spacing y={32} />
+            <div className="flex justify-center w-full">
+              <Button
+                size="lg"
+                color="blue"
+                className="w-[300px]"
+                onClick={handleRegistry}
+                disabled={loading}
+              >
+                Confirm
+              </Button>
+            </div>
           </div>
         </div>
       </section>

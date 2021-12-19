@@ -1,16 +1,29 @@
-import { useEffect, useState } from "react";
-import request from "../utils/request";
+import { useRequest } from '@umijs/hooks'
+import { useEffect } from 'react'
+import request from '../utils/request'
 
-export function useENS () {
-  const [data, setData] = useState<string[]>([]);
+async function getENS(address: string) {
+  const result = await request.get(`/authserver/ensName?address=${address}`)
+
+  if (result.status === 200 && result?.data?.ens?.length !== 0) {
+    return result.data.ens.filter((item) => !!item) as string[]
+  }
+
+  return []
+}
+
+export function useENS(address: string) {
+  const { run, data, loading } = useRequest(getENS, {
+    manual: true,
+    cacheKey: address,
+  })
 
   useEffect(() => {
-    request.get('/authserver/ensName').then((response) => {
-      if (response.status === 200) {
-        setData(response.data.ens);
-      }
-    })
-  }, [setData])
+    // if address is not set
+    if (!address) return
 
-  return data;
+    run(address)
+  }, [address, run])
+
+  return [data, loading] as const
 }

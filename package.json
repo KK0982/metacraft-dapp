@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "TAILWIND_MODE=watch next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -13,6 +13,7 @@
     "@umijs/hooks": "^1.9.3",
     "axios": "^0.24.0",
     "bnc-onboard": "^1.36.0",
+    "clsx": "^1.1.1",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "next": "latest",
@@ -21,6 +22,7 @@
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "sharp": "^0.29.3",
+    "skinview3d": "^2.1.0",
     "styled-components": "^5.3.3",
     "umi-request": "^1.4.0",
     "web3": "^1.6.1",

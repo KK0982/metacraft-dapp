@@ -11,6 +11,7 @@ input {
   appearance: none !important;
   box-shadow: none !important;
   background: transparent !important;
+  background: transparent !important;
   flex: 1;
 }
 

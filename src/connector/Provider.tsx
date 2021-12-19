@@ -52,7 +52,6 @@ export const Web3Provider = React.memo(({ children }) => {
           dispatch({ type: 'set-web3', data: new Web3(wallet.provider)})
         },
         address: (address) => {
-          console.log(address)
           dispatch({ type: 'set-active-address', data: address })
         }
       }

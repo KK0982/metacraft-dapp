@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useFormik } from 'formik'
-import { useCheckName } from '../../../hooks/registry/useChekcName'
+import { useCheckName } from '../../../hooks/registry/useCheckName'
 import * as yup from 'yup'
 
 export function useCreateAccountForm() {
@@ -36,12 +36,10 @@ export function useCreateAccountForm() {
   const formik = useFormik({
     initialValues: {
       name: '',
-      food: '',
-      skin: '',
+      food: ''
     },
     validationSchema: validationSchema,
     onSubmit: (data) => {
-      console.log(data)
     },
   })
 

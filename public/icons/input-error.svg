@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic-wrong</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="5.1-Default" transform="translate(-632.000000, -339.000000)" stroke="#EA4E34" stroke-width="1.5">
+            <g id="Part-1" transform="translate(272.000000, 242.000000)">
+                <g id="1" transform="translate(0.000000, 51.000000)">
+                    <g id="input" transform="translate(0.000000, 32.000000)">
+                        <g id="编组" transform="translate(360.000000, 14.000000)">
+                            <circle id="椭圆形" cx="10" cy="10" r="9.25"></circle>
+                            <g id="编组-5" transform="translate(7.000000, 7.000000)" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5.99812344" y1="0.00262664165" x2="0.00312760634" y2="5.99637273" id="Stroke-1"></line>
+                                <line x1="6" y1="6" x2="0" y2="0" id="Stroke-2"></line>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

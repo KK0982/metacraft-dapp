@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useMemo } from 'react'
-import styled from 'styled-components'
+import ErrorIcon from '/public/icons/input-error.svg';
 
 interface InputProps
   extends Omit<
@@ -14,7 +14,7 @@ interface InputProps
 }
 
 export const Input: FC<InputProps> = React.memo(
-  ({ className, value, onUserInput, pattern, onChange, ...rest }) => {
+  ({ className, value, onUserInput, pattern, onChange, error, ...rest }) => {
     const reg = useMemo(() => new RegExp(pattern), [pattern])
 
     const handleChange = useCallback(
@@ -33,15 +33,20 @@ export const Input: FC<InputProps> = React.memo(
 
     return (
       <div
-        className={`flex items-stretch h-48 min-w-[400px] bg-f7f8fc rounded-15 px-20 ${className}`}
+        className={`flex items-center h-48 min-w-[400px] bg-f7f8fc rounded-15 px-20 ${className}`}
       >
         <input
           {...rest}
           value={value}
           onChange={handleChange}
           className="text-16 leading-24 text-1b2533 placeholder-opacity-30"
-          autoComplete="new-password"
+          type='text'
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
         />
+        {error ? <ErrorIcon /> : null}
       </div>
     )
   }

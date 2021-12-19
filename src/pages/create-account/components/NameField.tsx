@@ -7,6 +7,7 @@ import { Spacing } from '../../../components/Spacing'
 import { Field } from './Field'
 import { useCreateAccountForm } from '../hooks/useCreateAccountForm'
 import { FormError } from '../../../components/form/FormError'
+import { useActiveAccount } from '../../../connector'
 
 interface NameFieldProps {
   error: string
@@ -18,7 +19,10 @@ interface NameFieldProps {
 
 export const NameField: FC<NameFieldProps> = React.memo(
   ({ error, id, name, value, onChange }) => {
-    const ensNames = useENS()
+    const activeAddress = useActiveAccount()
+
+    // TOOD: mock for ens
+    const [ens, ensLoading] = useENS('0x9620b36841DaCd567032110000a7F090eBf2BCa3')
 
     return (
       <Field title="What do you want people to call you?">
@@ -36,12 +40,19 @@ export const NameField: FC<NameFieldProps> = React.memo(
         {error ? <FormError>{error}</FormError> : null}
         <Spacing y={32} />
         <Label>Server Name</Label>
-        <TagGroup value={value} onChange={onChange}>
-          <Tag color="blue">HELLO</Tag>
-          <Tag color="blue" active>
-            WORLD
-          </Tag>
-        </TagGroup>
+        {ensLoading ? (
+          <p>loading your ens name..</p>
+        ) : ens?.length !== 0 ? (
+          <TagGroup value={value} onChange={onChange}>
+            {ens?.map((item) => (
+              <Tag color="blue" value={item} key={item}>
+                {item}
+              </Tag>
+            ))}
+          </TagGroup>
+        ) : (
+          <p>Sorry, You dont have any ens</p>
+        )}
         <Spacing y={32} />
         <Label>Traditional name</Label>
         <TagGroup value={value} onChange={onChange}>
