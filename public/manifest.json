@@ -1,0 +1,11 @@
+{
+  "name": "Matecraft Dapp",
+  "short_name": "Metacraft",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#fff",
+  "orientation": "portrait-primary",
+  "icons": [
+  ]
+}
