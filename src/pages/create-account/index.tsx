@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import Button from '../../components/Button'
 import { Container } from '../../components/layout/Container'
 import { Spacing } from '../../components/Spacing'
+import { useAuth } from '../../hooks/auth/useAuth'
 import { useRegistry } from '../../hooks/registry/useRegistry'
 import { FoodField } from './components/FoodField'
 import { NameField } from './components/NameField'
@@ -16,35 +17,20 @@ export const CreateAccount = React.memo(() => {
   const { run: registry, loading } = useRegistry()
   const router = useRouter()
 
-  const name = useMemo(() => {
-    return router.query?.name as string
-  }, [router])
-
-  const paramsFormUrl = useMemo(() => {
-    return {
-      address: router.query?.address as string,
-      timestamp: router.query?.timestamp as string,
-      signature: router.query?.signature as string,
-    }
-  }, [router])
+  const auth = useAuth();
 
   const handleRegistry = useMemo(
     () => async () => {
       const errors = await form.validateForm()
 
-      if (errors.name || errors.food) return
+      if (errors.name || errors.food || !auth) return
 
-      if (
-        !paramsFormUrl.address ||
-        !paramsFormUrl.timestamp ||
-        !paramsFormUrl.signature
-      )
-        return
+      const authResult = await auth(form.values.name);
 
       const result = await registry({
-        address: paramsFormUrl.address,
-        signature: paramsFormUrl.signature,
-        timestamp: Number(paramsFormUrl.timestamp),
+        address: authResult.address,
+        signature: authResult.signature,
+        timestamp: Number(authResult.timestamp),
         username: form.values.name,
         fruit: form.values.food,
         skin: skin.name || 'default_1',
@@ -54,7 +40,7 @@ export const CreateAccount = React.memo(() => {
         router.replace(`/auth?name=${name}&type=registry-success`)
       }
     },
-    [router, registry, form, paramsFormUrl, skin, name]
+    [auth, router, registry, form, skin, name]
   )
 
   return (

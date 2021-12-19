@@ -37,19 +37,19 @@ export const Auth = React.memo(() => {
 
       const { address, checksumAddress, timestamp, signature } = authResult
 
-      // const checkRegistryResult = await checkRegistry(address)
+      const checkRegistryResult = await checkRegistry(address)
 
       // TODO: disable registry check
-      // const needRegistry = checkRegistryResult?.data?.['new_address'] === false
+      const needRegistry = checkRegistryResult?.data?.['new_address'] === false
 
       // if the address is a new address, router to create page
-      // if (needRegistry) {
-      //   router.push(
-      //     `/create-account?name=${name}address=${address}&timestamp=${timestamp}&signature=${signature}`
-      //   )
+      if (needRegistry) {
+        router.push(
+          '/create-account'
+        )
 
-      //   return
-      // }
+        return
+      }
 
       setTimeout(() => {
         window.open(
