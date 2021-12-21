@@ -18,7 +18,7 @@ export const Auth = React.memo(() => {
     return {
       token: query?.token as string,
       address: query?.address as string,
-      name: query?.username as string,
+      name: (query?.username || query?.name) as string,
       signature: query?.signature as string,
       timestamp: query?.timestamp as string
     }
@@ -47,8 +47,9 @@ export const Auth = React.memo(() => {
 
       const checkRegistryResult = await checkRegistry(address)
 
-      // TODO: disable registry check
-      const needRegistry = checkRegistryResult?.data?.['new_address'] === false
+      const needRegistry = checkRegistryResult?.data?.['new_address'];
+
+      console.log('c',checkRegistryResult, needRegistry);
 
       // if the address is a new address, router to create page
       if (needRegistry) {
@@ -58,6 +59,8 @@ export const Auth = React.memo(() => {
 
         return
       }
+
+      console.log('??');
 
       setTimeout(() => {
         window.open(
@@ -69,6 +72,8 @@ export const Auth = React.memo(() => {
   )
 
   useEffect(() => {
+    console.log('run hello');
+
     run()
   }, [run])
 

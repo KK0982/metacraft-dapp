@@ -6,6 +6,10 @@ module.exports = {
       use: ['@svgr/webpack'],
     })
 
+
     return config
   },
+  typescript: {
+    ignoreBuildErrors: true
+  }
 }

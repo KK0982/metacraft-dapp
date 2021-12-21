@@ -11,7 +11,7 @@ import { Skin, SkinField } from './components/SkinField'
 import { useCreateAccountForm } from './hooks/useCreateAccountForm'
 import Square from '/public/icons/square-three.svg'
 
-const CreateAccount = React.memo(() => {
+export default React.memo(() => {
   const form = useCreateAccountForm()
   const [skin, setSkin] = useState<Skin>()
   const { run: registry, loading } = useRegistry()
@@ -91,6 +91,4 @@ const CreateAccount = React.memo(() => {
       </section>
     </Container>
   )
-})
-
-export default CreateAccount
+});

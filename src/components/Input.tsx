@@ -28,7 +28,7 @@ export const Input: FC<InputProps> = React.memo(
           onUserInput && onUserInput(value || '')
         }
       },
-      [onUserInput, pattern]
+      [onUserInput, onChange, reg]
     )
 
     return (
