@@ -12,8 +12,16 @@ export const Auth = React.memo(() => {
   const [authed, setAuthed] = useState<boolean>(false)
   const { run: checkRegistry } = useCheckRegistry()
 
-  const name = useMemo(() => {
-    return router.query?.username as string
+  const params = useMemo(() => {
+    const query =  router.query;
+
+    return {
+      token: query?.token as string,
+      address: query?.address as string,
+      name: query?.username as string,
+      signature: query?.signature as string,
+      timestamp: query?.timestamp as string
+    }
   }, [router])
 
   const isRegistrySuccess = useMemo(() => {
@@ -25,15 +33,15 @@ export const Auth = React.memo(() => {
       if (isRegistrySuccess) {
         setTimeout(() => {
           window.open(
-            `metacraft://?address=${checksumAddress}&timestamp=${timestamp}&signature=${signature}`
+            `metacraft://?address=${params.address}&timestamp=${params.timestamp}&signature=${params.signature}`
           )
         }, 1000)
         return
       }
 
-      if (!auth || !name || !checkRegistry) return
+      if (!auth || !params.name || !checkRegistry) return
 
-      const authResult = await auth(name)
+      const authResult = await auth(params.name as string)
 
       const { address, checksumAddress, timestamp, signature } = authResult
 
@@ -57,12 +65,12 @@ export const Auth = React.memo(() => {
         )
       }, 1000)
     },
-    [checkRegistry, auth, name, setAuthed, isRegistrySuccess]
+    [checkRegistry, auth, params, setAuthed, isRegistrySuccess]
   )
 
   useEffect(() => {
     run()
-  }, [run, name, auth, router, checkRegistry, setAuthed])
+  }, [run])
 
   return (
     <Container>

@@ -20,8 +20,7 @@ export const useAuth = () => {
       await ready.promise
 
       const checksumAddress = web3.utils.toChecksumAddress(address)
-      // const timestamp = Math.floor(new Date().getTime() / 1000)
-      const timestamp = '1639922305';
+      const timestamp = Math.floor(new Date().getTime() / 1000)
       const messageForSign = `${checksumAddress}|${name}|${timestamp}`
 
       const signature = await (web3.eth.personal as any).sign(

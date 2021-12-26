@@ -30,15 +30,16 @@ export function useCreateAccountForm() {
         .required('name is required')
         .max(10)
         .test('check-used', '', checkName),
+      food: yup.string().max(30)
     })
   }, [checkName])
 
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      food: ''
-    },
+    initialValues: { name: '', food: '' },
     validationSchema: validationSchema,
+    validateOnBlur: false,
+    validateOnChange: true,
+    validateOnMount: false,
     onSubmit: (data) => {
     },
   })

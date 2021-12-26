@@ -11,13 +11,13 @@ import { Skin, SkinField } from './components/SkinField'
 import { useCreateAccountForm } from './hooks/useCreateAccountForm'
 import Square from '/public/icons/square-three.svg'
 
-export const CreateAccount = React.memo(() => {
+const CreateAccount = React.memo(() => {
   const form = useCreateAccountForm()
   const [skin, setSkin] = useState<Skin>()
   const { run: registry, loading } = useRegistry()
   const router = useRouter()
 
-  const auth = useAuth();
+  const auth = useAuth()
 
   const handleRegistry = useMemo(
     () => async () => {
@@ -25,10 +25,10 @@ export const CreateAccount = React.memo(() => {
 
       if (errors.name || errors.food || !auth) return
 
-      const authResult = await auth(form.values.name);
+      const authResult = await auth(form.values.name)
 
       const result = await registry({
-        address: authResult.address,
+        address: authResult.checksumAddress,
         signature: authResult.signature,
         timestamp: Number(authResult.timestamp),
         username: form.values.name,
@@ -36,11 +36,14 @@ export const CreateAccount = React.memo(() => {
         skin: skin.name || 'default_1',
       })
 
-      if (result.status === 200 && result.data.auth) {
-        router.replace(`/auth?name=${name}&type=registry-success`)
+      if (result.status === 200 && result.data.accessToken) {
+        form.resetForm();
+        router.replace(
+          `/?token=${result.data.accessToken}&address=${authResult.checksumAddress}&name=${form.values.name}&signature${authResult.signature}&timestamp=${authResult.timestamp}&type=registry-success`
+        )
       }
     },
-    [auth, router, registry, form, skin, name]
+    [auth, router, registry, form, skin]
   )
 
   return (

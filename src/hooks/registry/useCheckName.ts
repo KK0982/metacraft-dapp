@@ -7,6 +7,7 @@ function checkName (name: string) {
 
 export const useCheckName = () => {
   return useRequest(checkName, {
-    manual: true
+    manual: true,
+    cacheKey: 'name'
   })
 }

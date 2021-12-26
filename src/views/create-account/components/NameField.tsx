@@ -21,8 +21,7 @@ export const NameField: FC<NameFieldProps> = React.memo(
   ({ error, id, name, value, onChange }) => {
     const activeAddress = useActiveAccount()
 
-    // TOOD: mock for ens
-    const [ens, ensLoading] = useENS('0x9620b36841DaCd567032110000a7F090eBf2BCa3')
+    const [ens, ensLoading] = useENS(activeAddress)
 
     return (
       <Field title="What do you want people to call you?">
