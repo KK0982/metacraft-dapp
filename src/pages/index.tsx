@@ -49,8 +49,6 @@ export const Auth = React.memo(() => {
 
       const needRegistry = checkRegistryResult?.data?.['new_address'];
 
-      console.log('c',checkRegistryResult, needRegistry);
-
       // if the address is a new address, router to create page
       if (needRegistry) {
         router.push(
@@ -60,8 +58,7 @@ export const Auth = React.memo(() => {
         return
       }
 
-      console.log('??');
-
+      setAuthed(true);
       setTimeout(() => {
         window.open(
           `metacraft://?address=${checksumAddress}&timestamp=${timestamp}&signature=${signature}`
