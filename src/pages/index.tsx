@@ -5,12 +5,21 @@ import { useRouter } from 'next/router'
 import { useAuth } from '../hooks/auth/useAuth'
 import { Container } from '../components/layout/Container'
 import { useCheckRegistry } from '../hooks/registry/useCheckRegistry'
+import { NOTIFICATION_TYPE, useNotification } from '../components/notifications'
 
 export const Auth = React.memo(() => {
   const router = useRouter()
   const auth = useAuth()
   const [authed, setAuthed] = useState<boolean>(false)
   const { run: checkRegistry } = useCheckRegistry()
+  const notification = useNotification();
+
+  useEffect(() => {
+    notification.show({
+      type: NOTIFICATION_TYPE.SUCCESS,
+      title: 'hello'
+    })
+  }, [notification]);
 
   const params = useMemo(() => {
     const query =  router.query;

@@ -8,6 +8,7 @@
     "format:prettier": "yarn prettier --write ."
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.5",
     "@reduxjs/toolkit": "^1.7.0",
     "@svgr/webpack": "^6.1.1",
     "@umijs/hooks": "^1.9.3",

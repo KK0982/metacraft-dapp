@@ -29,7 +29,9 @@ module.exports = {
         'e8fff1': '#E8FFF1',
         '26c165': '#26C165',
         'f7f8fc': '#F7F8FC',
-        'fff': '#fff'
+        '333': '#333',
+        'fff': '#fff',
+        '2e2e2e': '#2e2e2e'
       },
       fontSize: {
         14: '3.5rem',
@@ -47,6 +49,8 @@ module.exports = {
         40: '10rem'
       },
       spacing: {
+        8: '2rem',
+        16: '4rem',
         18: '4.5rem',
         20: '5rem',
         28: '7rem',
@@ -57,6 +61,9 @@ module.exports = {
       },
       boxShadow: {
         DEFAULT: "0 20px 40px 10px rgba(244, 244, 244, 0.2)"
+      },
+      borderRadius: {
+        DEFAULT: '8px'
       }
     },
   },
