@@ -16,12 +16,12 @@ export const useAuth = () => {
   const ready = useConnectReadyStatus()
 
   return useMemo(
-    () => !address ||!web3 ? false : async (name: string) => {
+    () => !address ||!web3 ? false : async () => {
       await ready.promise
 
       const checksumAddress = web3.utils.toChecksumAddress(address)
       const timestamp = Math.floor(new Date().getTime() / 1000)
-      const messageForSign = `${checksumAddress}|${name}|${timestamp}`
+      const messageForSign = `${checksumAddress}|${timestamp}`
 
       const signature = await (web3.eth.personal as any).sign(
         messageForSign,
@@ -35,6 +35,6 @@ export const useAuth = () => {
         signature: signature.substring(2),
       }
     },
-    [address, web3]
+    [address, ready.promise, web3]
   )
 }

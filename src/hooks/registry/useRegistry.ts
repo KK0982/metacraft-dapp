@@ -5,9 +5,9 @@ interface RegistryData {
   timestamp: number;
   address: string;
   signature: string;
-  username: string;
-  fruit: string;
-  skin: string
+  username?: string;
+  fruit?: string;
+  skin?: string
 }
 
 function registry (data: RegistryData) {

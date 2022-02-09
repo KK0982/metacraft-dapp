@@ -1,16 +1,12 @@
 import React, { ReactNode } from "react";
 
-export enum NOTIFICATION_TYPE {
-  'INFO',
-  'SUCCESS',
-  'FAILED'
-}
+export type NotificationType = 'info' | 'success' | 'failed' | 'loading';
 
 export interface NotificationData {
   // uuid for notification
   id: string;
   // notification type
-  type: NOTIFICATION_TYPE;
+  type: NotificationType;
   title: ReactNode;
   content: ReactNode;
   // display duration time

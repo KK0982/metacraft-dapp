@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash'
 import { useCallback, useContext, useMemo, useReducer } from 'react'
-import { NotificationData, NOTIFICATION_TYPE } from '.'
+import { NotificationData, NotificationType } from '.'
 import { NotificationContextRoot } from './NotificationProvider'
 import { NotificationAction, NotificationState } from './types'
 
@@ -69,7 +69,7 @@ export function useNotification() {
         type: 'add-notification',
         data: {
           id,
-          type: data.type || NOTIFICATION_TYPE.INFO,
+          type: data.type || NotificationType.INFO,
           title: data.title,
           content: data.content,
           duration: data.duration || DEFAULT_DURATION,

@@ -1,26 +1,32 @@
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { useFormik } from 'formik'
 import { useCheckName } from '../../../hooks/registry/useCheckName'
 import * as yup from 'yup'
+import { debounce } from 'lodash'
 
 export function useCreateAccountForm() {
   const { run: checkNameFn } = useCheckName()
+  const nameRef = useRef<string>();
 
   const checkName = useMemo(() => {
-    return async (value: string, context: yup.TestContext) => {
+    return debounce(async (value: string, context: yup.TestContext) => {
+      if (value === nameRef.current) return;
       if (!value) return true;
+
+      nameRef.current = value;
 
       const result = await checkNameFn(value);
 
-      if (result?.status!==200) {
+      if (result?.status !== 200) {
         return context.createError({ message: 'check name failed' });
       }
 
       if (result?.data?.['name_can_use'] === false) {
         return context.createError({ message: 'This nickname has already been used' });
       }
+
       return true;
-    }
+    }, 500);
   }, [checkNameFn]);
 
   const validationSchema = useMemo(() => {
@@ -40,8 +46,7 @@ export function useCreateAccountForm() {
     validateOnBlur: false,
     validateOnChange: true,
     validateOnMount: false,
-    onSubmit: (data) => {
-    },
+    onSubmit: (data) => { },
   })
 
   return formik

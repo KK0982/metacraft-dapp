@@ -15,9 +15,8 @@ export default React.memo(() => {
   const form = useCreateAccountForm()
   const [skin, setSkin] = useState<Skin>()
   const { run: registry, loading } = useRegistry()
-  const router = useRouter()
-
   const auth = useAuth()
+  const router = useRouter()
 
   const handleRegistry = useMemo(
     () => async () => {
@@ -25,7 +24,7 @@ export default React.memo(() => {
 
       if (errors.name || errors.food || !auth) return
 
-      const authResult = await auth(form.values.name)
+      const authResult = await auth()
 
       const result = await registry({
         address: authResult.checksumAddress,
@@ -38,9 +37,18 @@ export default React.memo(() => {
 
       if (result.status === 200 && result.data.accessToken) {
         form.resetForm();
-        router.replace(
-          `/?token=${result.data.accessToken}&address=${authResult.checksumAddress}&name=${form.values.name}&signature${authResult.signature}&timestamp=${authResult.timestamp}&type=registry-success`
-        )
+
+        const searchParams = new URLSearchParams({
+          token: result.data.accessToken,
+          'checksumAddress': authResult.checksumAddress,
+          address: authResult.address,
+          name: form.values.name,
+          signature: authResult.signature,
+          timestamp: String(authResult.timestamp)
+        })
+
+        // jump back to index page with login params
+        router.replace(`/?${searchParams.toString()}`)
       }
     },
     [auth, router, registry, form, skin]

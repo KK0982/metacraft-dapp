@@ -1,13 +1,14 @@
-import { useRequest } from "@umijs/hooks"
-import request from "../../utils/request"
+import { useRequest } from '@umijs/hooks'
+import request from '../../utils/request'
 
-function checkName (name: string) {
+function checkName(name: string) {
   return request.get(`/authserver/nameCheck?username=${name}`)
 }
 
 export const useCheckName = () => {
-  return useRequest(checkName, {
+  const { run, data, loading } = useRequest(checkName, {
     manual: true,
-    cacheKey: 'name'
   })
+
+  return { run, data, loading }
 }

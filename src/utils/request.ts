@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({ 
-  baseURL: "http://api.test.metacraft.cc"
+  baseURL: "https://api.test.metacraft.cc"
 })

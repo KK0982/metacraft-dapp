@@ -5,81 +5,94 @@ import { useRouter } from 'next/router'
 import { useAuth } from '../hooks/auth/useAuth'
 import { Container } from '../components/layout/Container'
 import { useCheckRegistry } from '../hooks/registry/useCheckRegistry'
-import { NOTIFICATION_TYPE, useNotification } from '../components/notifications'
+import { useNotification } from '../components/notifications'
+import { useActiveAccount } from '../connector'
+import { useRegistry } from '../hooks/registry/useRegistry'
 
 export const Auth = React.memo(() => {
   const router = useRouter()
   const auth = useAuth()
   const [authed, setAuthed] = useState<boolean>(false)
   const { run: checkRegistry } = useCheckRegistry()
-  const notification = useNotification();
-
-  useEffect(() => {
-    notification.show({
-      type: NOTIFICATION_TYPE.SUCCESS,
-      title: 'hello'
-    })
-  }, [notification]);
+  const notification = useNotification()
+  const activeAccount = useActiveAccount()
+  const { run: registry } = useRegistry()
 
   const params = useMemo(() => {
-    const query =  router.query;
+    const query = router.query
 
     return {
-      token: query?.token as string,
-      address: query?.address as string,
-      name: (query?.username || query?.name) as string,
-      signature: query?.signature as string,
-      timestamp: query?.timestamp as string
+      token: (query?.token || '') as string,
+      checksumAddress: (query?.['checksum-address'] || '') as string,
+      address: (query?.address || '') as string,
+      name: (query?.name || '') as string,
+      signature: (query?.signature || '') as string,
+      timestamp: (query?.timestamp || '') as string,
     }
   }, [router])
 
-  const isRegistrySuccess = useMemo(() => {
-    return router.query?.type === 'registry-success'
-  }, [router])
+  // if get signature form url search, assume that the page is from registry
+  const isRegistrySuccess = !!params.signature
 
   const run = useMemo(
     () => async () => {
-      if (isRegistrySuccess) {
-        setTimeout(() => {
-          window.open(
-            `metacraft://?address=${params.address}&timestamp=${params.timestamp}&signature=${params.signature}`
-          )
-        }, 1000)
-        return
-      }
+      if (authed) return
+      if (!auth || !checkRegistry || !activeAccount) return
 
-      if (!auth || !params.name || !checkRegistry) return
+      // check registry at first
+      const checkRegistryResult = await checkRegistry(activeAccount)
 
-      const authResult = await auth(params.name as string)
+      const needRegistry = checkRegistryResult?.data?.['new_address']
 
-      const { address, checksumAddress, timestamp, signature } = authResult
-
-      const checkRegistryResult = await checkRegistry(address)
-
-      const needRegistry = checkRegistryResult?.data?.['new_address'];
-
-      // if the address is a new address, router to create page
+      // if the address is a new address, router to create-account page
       if (needRegistry) {
-        router.push(
-          '/create-account'
-        )
+        router.push('/create-account')
 
         return
       }
 
-      setAuthed(true);
+      // if don't need regist, call auth process
+      notification.show({ type: 'info', content: 'auth start' })
+
+      const authResult = await auth()
+      const { address, checksumAddress, timestamp, signature } = authResult
+      const registryResult = await registry({ address: checksumAddress, signature, timestamp })
+
+      console.log(registryResult);
+
+      setAuthed(true)
       setTimeout(() => {
-        window.open(
-          `metacraft://?address=${checksumAddress}&timestamp=${timestamp}&signature=${signature}`
-        )
+        const searchParams = new URLSearchParams({
+          name: registryResult?.data?.selectedProfile?.name,
+          address,
+          checksumAddress: checksumAddress,
+          timestamp: String(timestamp),
+          signature,
+        })
+
+        window.open(`metacraft://?${searchParams.toString()}`)
       }, 1000)
     },
-    [checkRegistry, auth, params, setAuthed, isRegistrySuccess]
+    [authed, auth, checkRegistry, activeAccount, notification, registry, router]
   )
-
   useEffect(() => {
-    console.log('run hello');
+    if (!isRegistrySuccess) return
 
+    setTimeout(() => {
+      const searchParams = new URLSearchParams({
+        name: params.name,
+        address: params.address,
+        checksumAddress: params.checksumAddress,
+        timestamp: String(params.timestamp),
+        signature: params.signature,
+      })
+
+      window.open(`metacraft://?${searchParams.toString()}`)
+    }, 1000)
+  }, [isRegistrySuccess, params.address, params.checksumAddress, params.name, params.signature, params.timestamp])
+
+  // auto run check process
+  useEffect(() => {
     run()
   }, [run])
 

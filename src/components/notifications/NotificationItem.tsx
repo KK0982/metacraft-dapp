@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React, { FC } from 'react'
-import { NOTIFICATION_TYPE } from '.'
+import { NotificationType } from '.'
 import { NotificationData } from './types'
 import InformationCircleIcon from '@heroicons/react/outline/InformationCircleIcon';
 
