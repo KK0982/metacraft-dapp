@@ -7,7 +7,7 @@
 
 # yarn
 .yarn/*
-!.yarn/release
+!.yarn/releases
 !.yarn/plugins
 
 

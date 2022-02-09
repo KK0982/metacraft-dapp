@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import Button from '../../components/Button'
 import { Container } from '../../components/layout/Container'
 import { Spacing } from '../../components/Spacing'
