@@ -34,6 +34,12 @@ const reducer = (state: Web3ProviderData, action: Action): Web3ProviderData => {
   }
 }
 
+const wallets = [
+  { walletName: "metamask", preferred: true },
+  // { walletName: "walletConnect", preferred: true },
+  { walletName: 'opera', preferred: true }
+];
+
 export const Web3Provider = React.memo(({ children }) => {
   const [bncInstance, setBNCInstance] = useState<API>();
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
@@ -42,6 +48,9 @@ export const Web3Provider = React.memo(({ children }) => {
     const instance  = bncOnBoard({
       dappId: DAPP_ID,
       networkId: 4,
+      walletSelect: {
+        wallets: wallets
+      },
       walletCheck: [
         { checkName: 'accounts' },
         { checkName: 'connect' },
