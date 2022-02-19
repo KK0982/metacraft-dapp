@@ -27,7 +27,7 @@ export const NotificationItem: FC<NotificationItemProps> = React.memo(
               {title}
             </div>
           ) : null}
-          {content ? <div className="text-18 text-">{content}</div> : null}
+          {content ? <div className="text-18 mt-4">{content}</div> : null}
         </div>
       </div>
     )

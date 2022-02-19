@@ -14,9 +14,9 @@ interface FoodFieldProps {
 }
 
 export const FoodField: FC<FoodFieldProps> = React.memo(
-  ({ id, name, value, onChange }) => {
+  ({ id, name, value, onChange, ...rest }) => {
     return (
-      <Field title="What is your favorite food?">
+      <Field title="What is your favorite food?" name={name} validate={() => ''}>
         <Label>Food</Label>
         <Input
           className="w-[400px]"
@@ -26,6 +26,7 @@ export const FoodField: FC<FoodFieldProps> = React.memo(
           pattern="^.{0,30}$"
           id={id}
           name={name}
+          {...rest}
         />
         <Spacing y={32} />
         <TagGroup

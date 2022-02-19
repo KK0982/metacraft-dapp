@@ -8933,6 +8933,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"husky@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "husky@npm:7.0.4"
+  bin:
+    husky: lib/bin.js
+  checksum: c6ec4af63da2c9522da8674a20ad9b48362cc92704896cc8a58c6a2a39d797feb2b806f93fbd83a6d653fbdceb2c3b6e0b602c6b2e8565206ffc2882ef7db9e9
+  languageName: node
+  linkType: hard
+
 "icepick@npm:^2.4.0":
   version: 2.4.0
   resolution: "icepick@npm:2.4.0"
@@ -13505,6 +13514,7 @@ next@latest:
     eslint: 8.4.0
     eslint-config-next: 12.0.7
     formik: ^2.2.9
+    husky: ^7.0.4
     lodash: ^4.17.21
     next: latest
     postcss: ^8.3.5

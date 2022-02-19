@@ -16,7 +16,7 @@ export const NotificationProvider = React.memo(({ children }) => {
   return (
     <NotificationContextRoot.Provider value={{ state, dispatch }}>
       {children}
-      <div className="absolute top-24 right-24">
+      <div className="fixed top-24 right-24">
         {state.items.map((item) => (
           <NotificationItem {...item} key={item.id} />
         ))}

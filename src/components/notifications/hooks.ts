@@ -62,8 +62,6 @@ const DEFAULT_DURATION = 3000
 export function useNotification() {
   const { dispatch } = useContext(NotificationContextRoot)
 
-  console.log(dispatch)
-
   const show = useCallback(
     (data: NotificationConfig) => {
       if (!dispatch) return

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useMemo, useState } from 'react'
 import { Label } from '../../../components/form/Label'
 import { Input } from '../../../components/Input'
 import { Tag, TagGroup } from '../../../components/form/Tag'
@@ -8,6 +8,8 @@ import { Field } from './Field'
 import { useCreateAccountForm } from '../hooks/useCreateAccountForm'
 import { FormError } from '../../../components/form/FormError'
 import { useActiveAccount } from '../../../connector'
+import { debounce } from 'lodash'
+import { useCheckName } from '../../../hooks/registry/useCheckName'
 
 interface NameFieldProps {
   error: string
@@ -15,16 +17,45 @@ interface NameFieldProps {
   id: string
   value: string
   onChange: (value: string) => void
+  onError: (error: string) => void
 }
 
 export const NameField: FC<NameFieldProps> = React.memo(
-  ({ error, id, name, value, onChange }) => {
+  ({ error, id, name, value, onChange, onError, ...remained }) => {
     const activeAddress = useActiveAccount()
+    const { run: checkNameFn } = useCheckName()
 
     const [ens, ensLoading] = useENS(activeAddress)
 
+    const checkName = useMemo(() => {
+      console.log('??')
+      return debounce(async (value: string) => {
+        let error: string;
+  
+        const result = await checkNameFn(value)
+  
+        if (result?.status !== 200) {
+          error = 'check name failed'
+        }
+  
+        if (result?.data?.['name_can_use'] === false) {
+          error = 'This nickname has already been used'
+        }
+  
+        if (error) {
+          onError(error);
+        }
+      }, 500);
+    }, [])
+
+    useEffect(() => {
+      if (!value) return;
+
+      // checkName(value);
+    }, [value]);
+
     return (
-      <Field title="What do you want people to call you?">
+      <Field title="What do you want people to call you?" name={name}>
         <Label required>Nickname</Label>
         <Input
           className="w-[400px]"
@@ -35,6 +66,7 @@ export const NameField: FC<NameFieldProps> = React.memo(
           name={name}
           value={value}
           error={error}
+          {...remained}
         />
         {error ? <FormError>{error}</FormError> : null}
         <Spacing y={32} />

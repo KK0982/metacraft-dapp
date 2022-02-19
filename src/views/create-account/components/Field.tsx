@@ -3,7 +3,8 @@ import { Spacing } from '../../../components/Spacing'
 import { Title } from './Title'
 
 interface FieldProps {
-  title: ReactNode
+  name?: string;
+  title: ReactNode;
 }
 
 export const Field: FC<FieldProps> = React.memo(({ title, children }) => {

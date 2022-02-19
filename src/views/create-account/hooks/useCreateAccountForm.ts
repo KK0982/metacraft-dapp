@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useFormik } from 'formik'
 import { useCheckName } from '../../../hooks/registry/useCheckName'
 import * as yup from 'yup'
@@ -6,29 +6,18 @@ import { debounce } from 'lodash'
 
 export function useCreateAccountForm() {
   const { run: checkNameFn } = useCheckName()
-  const nameRef = useRef<string>()
-
   const checkName = useMemo(() => {
-    return debounce(async (value: string, context: yup.TestContext) => {
-      if (value === nameRef.current) return
-      if (!value) return true
-
-      nameRef.current = value
+    return async (value: string) => {
+      if (!value) return true 
 
       const result = await checkNameFn(value)
 
-      if (result?.status !== 200) {
-        return context.createError({ message: 'check name failed' })
-      }
-
       if (result?.data?.['name_can_use'] === false) {
-        return context.createError({
-          message: 'This nickname has already been used',
-        })
+        return false;
       }
 
       return true
-    }, 500)
+    }
   }, [checkNameFn])
 
   const validationSchema = useMemo(() => {
@@ -36,8 +25,8 @@ export function useCreateAccountForm() {
       name: yup
         .string()
         .required('name is required')
-        .max(10)
-        .test('check-used', '', checkName),
+        .max(56)
+        .test('check-used', 'This nickname has already been used', checkName),
       food: yup.string().max(30),
     })
   }, [checkName])
@@ -46,10 +35,22 @@ export function useCreateAccountForm() {
     initialValues: { name: '', food: '' },
     validationSchema: validationSchema,
     validateOnBlur: false,
-    validateOnChange: true,
+    validateOnChange: false,
     validateOnMount: false,
     onSubmit: (data) => {},
   })
+
+  const debouncedValidate = useMemo(
+    () => debounce(formik.validateForm, 500),
+    [formik.validateForm],
+  );
+
+  useEffect(
+    () => {
+      debouncedValidate(formik.values);
+    },
+    [formik.values, debouncedValidate],
+  );
 
   return formik
 }

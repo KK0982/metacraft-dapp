@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import React, { useMemo, useState } from 'react'
 import Button from '../../components/Button'
 import { Container } from '../../components/layout/Container'
+import { useNotification } from '../../components/notifications'
 import { Spacing } from '../../components/Spacing'
 import { useAuth } from '../../hooks/auth/useAuth'
 import { useRegistry } from '../../hooks/registry/useRegistry'
@@ -17,12 +18,20 @@ export default React.memo(() => {
   const { run: registry, loading } = useRegistry()
   const auth = useAuth()
   const router = useRouter()
+  const notification = useNotification();
 
   const handleRegistry = useMemo(
     () => async () => {
       const errors = await form.validateForm()
 
-      if (errors.name || errors.food || !auth) return
+      if (errors.name || errors.food || !auth) {
+        notification.show({
+          type: 'failed',
+          title: errors.name || errors.food
+        });
+
+        return;
+      }
 
       const authResult = await auth()
 
@@ -72,6 +81,7 @@ export default React.memo(() => {
               value={form.values.name}
               error={form.errors.name}
               onChange={(name: string) => form.setFieldValue('name', name)}
+              onError={(error: string) => form.setFieldError('name', error)}
             />
             <Spacing y={32} />
             <FoodField

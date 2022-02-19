@@ -15,17 +15,9 @@ const ItemTitle = React.memo(({ children }) => {
 
 const DEFAULT_SKINS = [
   {
-    name: 'cocoa',
-    skin: 'https://www.minecraftskins.com/uploads/skins/2021/12/18/c-o-c-o-a----remake-----19546219.png?v436',
-  },
-  {
-    name: 'bloom',
-    skin: 'https://www.minecraftskins.com/uploads/skins/2021/12/12/b-l-o-o-m---winx-club-19512177.png?v436',
-  },
-  {
-    name: 'Summer Days',
-    skin: 'https://www.minecraftskins.com/uploads/skins/2021/12/17/-summer-days--remake-19540903.png?v436',
-  },
+    name: 'Steve',
+    skin: '/skins/Default_Steve_Skin.png',
+  }
 ]
 
 export interface Skin {
