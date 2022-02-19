@@ -55,25 +55,29 @@ export const Tag: FC<TagProps> = React.memo(
 
 interface TagGroupProps {
   value?: string
-  onChange?: (value: string) => void;
-  forceClassName?: string;
+  onChange?: (value: string) => void
+  forceClassName?: string
 }
 
 export const TagGroup: FC<TagGroupProps> = React.memo(
-  ({ children, value, onChange ,forceClassName }) => {
+  ({ children, value, onChange, forceClassName }) => {
     return (
-      <div className={ forceClassName ? forceClassName : "flex flex-wrap items-center gap-x-24 gap-y-12"}>
-        {
-          React.Children.map(children, (child: ReactElement) => {
-            if (!child) return null;
-
-            return React.cloneElement(child, {
-              selected: value === child?.props?.value,
-              onChange: onChange,
-              active: child?.props?.value === value
-            });
-          })
+      <div
+        className={
+          forceClassName
+            ? forceClassName
+            : 'flex flex-wrap items-center gap-x-24 gap-y-12'
         }
+      >
+        {React.Children.map(children, (child: ReactElement) => {
+          if (!child) return null
+
+          return React.cloneElement(child, {
+            selected: value === child?.props?.value,
+            onChange: onChange,
+            active: child?.props?.value === value,
+          })
+        })}
       </div>
     )
   }

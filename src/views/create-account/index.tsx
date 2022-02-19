@@ -36,15 +36,15 @@ export default React.memo(() => {
       })
 
       if (result.status === 200 && result.data.accessToken) {
-        form.resetForm();
+        form.resetForm()
 
         const searchParams = new URLSearchParams({
           token: result.data.accessToken,
-          'checksumAddress': authResult.checksumAddress,
+          checksumAddress: authResult.checksumAddress,
           address: authResult.address,
           name: form.values.name,
           signature: authResult.signature,
-          timestamp: String(authResult.timestamp)
+          timestamp: String(authResult.timestamp),
         })
 
         // jump back to index page with login params
@@ -99,4 +99,4 @@ export default React.memo(() => {
       </section>
     </Container>
   )
-});
+})

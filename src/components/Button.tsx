@@ -1,5 +1,5 @@
 import React from 'react'
-import clsx from 'clsx';
+import clsx from 'clsx'
 
 const SIZE = {
   default: 'h-32',
@@ -7,7 +7,8 @@ const SIZE = {
 }
 
 const FILLED = {
-  default: 'bg-transparent opacity-80 hover:opacity-100 flex items-cetner justify-center',
+  default:
+    'bg-transparent opacity-80 hover:opacity-100 flex items-cetner justify-center',
   blue: 'bg-2539f4 text-16 leading-24 text-fff flex items-center justify-center',
 }
 
@@ -22,7 +23,8 @@ const EMPTY = {
 }
 
 const LINK = {
-  default: 'text-primary hover:text-high-emphesis focus:text-high-emphesis whitespace-nowrap focus:ring-0',
+  default:
+    'text-primary hover:text-high-emphesis focus:text-high-emphesis whitespace-nowrap focus:ring-0',
   blue: 'text-blue text-opacity-80 hover:text-opacity-100 focus:text-opacity-100 whitespace-nowrap focus:ring-0',
 }
 
@@ -39,7 +41,8 @@ export type ButtonSize = 'xs' | 'sm' | 'lg' | 'default' | 'none'
 
 export type ButtonVariant = 'outlined' | 'filled' | 'empty' | 'link'
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: ButtonColor
   size?: ButtonSize
   variant?: ButtonVariant

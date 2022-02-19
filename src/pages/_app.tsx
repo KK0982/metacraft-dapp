@@ -10,18 +10,18 @@ import request from '../utils/request'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Web3Provider>
-      <NotificationProvider>
-      <ReduxProvider store={store}>
-        <Head>
-          <title>Metacraft</title>
-        </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ReduxProvider>
-      </NotificationProvider>
-    </Web3Provider>
+    <NotificationProvider>
+      <Web3Provider>
+        <ReduxProvider store={store}>
+          <Head>
+            <title>Metacraft</title>
+          </Head>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ReduxProvider>
+      </Web3Provider>
+    </NotificationProvider>
   )
 }
 

@@ -10,7 +10,7 @@ interface SkinPerviewProps {
 
 export const SkinPerview: FC<SkinPerviewProps> = ({ name, skin }) => {
   const ref = useRef<HTMLCanvasElement>()
-  const viewerRef = useRef<skinview3d.SkinViewer>();
+  const viewerRef = useRef<skinview3d.SkinViewer>()
 
   useEffect(() => {
     if (!ref.current) return
@@ -19,23 +19,22 @@ export const SkinPerview: FC<SkinPerviewProps> = ({ name, skin }) => {
       canvas: ref.current,
       width: 300,
       height: 274,
-    });
+    })
 
-    viewerRef.current = viewer;
+    viewerRef.current = viewer
 
-    let control = skinview3d.createOrbitControls(viewer);
+    let control = skinview3d.createOrbitControls(viewer)
 
-    control.enableRotate = true;
-    control.enableZoom = false;
-    control.enablePan = false;
-
-    (viewer as any).animations.add((skinview3d as any).WalkingAnimation);
+    control.enableRotate = true
+    control.enableZoom = false
+    control.enablePan = false
+    ;(viewer as any).animations.add((skinview3d as any).WalkingAnimation)
   }, [])
 
   useEffect(() => {
-    if (!viewerRef.current || !skin) return;
+    if (!viewerRef.current || !skin) return
 
-    viewerRef.current.loadSkin(skin);
+    viewerRef.current.loadSkin(skin)
   }, [viewerRef, skin])
 
   return (

@@ -1,12 +1,12 @@
 import React, { FC, useCallback, useMemo } from 'react'
-import ErrorIcon from '/public/icons/input-error.svg';
+import ErrorIcon from '/public/icons/input-error.svg'
 
 interface InputProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     'value' | 'pattern'
   > {
-  error?: string;
+  error?: string
   value?: string
   onUserInput?: (value: string) => void
   pattern?: string
@@ -20,7 +20,7 @@ export const Input: FC<InputProps> = React.memo(
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         // if custom onChange function
-        onChange && onChange(e);
+        onChange && onChange(e)
 
         const value = e.currentTarget.value
 
@@ -40,7 +40,7 @@ export const Input: FC<InputProps> = React.memo(
           value={value}
           onChange={handleChange}
           className="text-16 leading-24 text-1b2533 placeholder-opacity-30"
-          type='text'
+          type="text"
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"

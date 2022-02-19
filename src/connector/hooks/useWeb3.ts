@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { Web3ProviderContext } from "../context";
+import { useContext } from 'react'
+import { Web3ProviderContext } from '../context'
 
-export function useWeb3 () {
-  const data = useContext(Web3ProviderContext);
+export function useWeb3() {
+  const data = useContext(Web3ProviderContext)
 
-  return data.web3;
+  return data.web3
 }

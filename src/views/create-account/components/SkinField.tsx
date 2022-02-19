@@ -47,19 +47,16 @@ export const SkinField: FC<SkinFieldProps> = React.memo(
     useEffect(() => {
       if (!value) {
         // set default skins
-        onChange(DEFAULT_SKINS[0]);
+        onChange(DEFAULT_SKINS[0])
       }
-    }, [value, onChange]);
+    }, [value, onChange])
 
     return (
       <Field title="What do you want to look like?">
         <div className="flex gap-x-16 items-stretch">
           <div>
             <ItemTitle>Preview skin</ItemTitle>
-            <SkinPerview
-              name={value?.name}
-              skin={value?.skin}
-            />
+            <SkinPerview name={value?.name} skin={value?.skin} />
           </div>
           <div className="flex-1">
             <ItemTitle>Your wardrobe</ItemTitle>
@@ -108,7 +105,7 @@ const DefaultSkinSelector: FC<{
             src={`/views/auth/default-nft-${i + 1}.png`}
             width="56"
             height="56"
-            className='cursor-pointer'
+            className="cursor-pointer"
           />
         )
       })}

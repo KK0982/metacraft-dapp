@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash'
 import { useCallback, useContext, useMemo, useReducer } from 'react'
-import { NotificationData, NotificationType } from '.'
+import { NotificationData } from './types'
 import { NotificationContextRoot } from './NotificationProvider'
 import { NotificationAction, NotificationState } from './types'
 
@@ -21,7 +21,7 @@ const reducer = (
 
       if (position === -1) return state
 
-      state.items.splice(position, 1);
+      state.items.splice(position, 1)
       return {
         items: [...state.items],
       }
@@ -44,9 +44,10 @@ const reducer = (
         items: [...state.items],
       }
     }
+    default: {
+      return state
+    }
   }
-
-  return state
 }
 
 export function useNotificationEnv() {
@@ -61,24 +62,30 @@ const DEFAULT_DURATION = 3000
 export function useNotification() {
   const { dispatch } = useContext(NotificationContextRoot)
 
+  console.log(dispatch)
+
   const show = useCallback(
     (data: NotificationConfig) => {
+      if (!dispatch) return
+
       const id = uniqueId('notification-')
 
       dispatch({
         type: 'add-notification',
         data: {
           id,
-          type: data.type || NotificationType.INFO,
+          type: data.type || 'info',
           title: data.title,
           content: data.content,
           duration: data.duration || DEFAULT_DURATION,
         },
       })
 
-      setTimeout(() => {
-        dispatch({ type: 'remove-notification', data: id })
-      }, data.duration || DEFAULT_DURATION)
+      if (data.duration !== null) {
+        setTimeout(() => {
+          dispatch({ type: 'remove-notification', data: id })
+        }, data.duration || DEFAULT_DURATION)
+      }
     },
     [dispatch]
   )

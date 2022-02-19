@@ -56,9 +56,13 @@ export const Auth = React.memo(() => {
 
       const authResult = await auth()
       const { address, checksumAddress, timestamp, signature } = authResult
-      const registryResult = await registry({ address: checksumAddress, signature, timestamp })
+      const registryResult = await registry({
+        address: checksumAddress,
+        signature,
+        timestamp,
+      })
 
-      console.log(registryResult);
+      console.log(registryResult)
 
       setAuthed(true)
       setTimeout(() => {
@@ -89,7 +93,14 @@ export const Auth = React.memo(() => {
 
       window.open(`metacraft://?${searchParams.toString()}`)
     }, 1000)
-  }, [isRegistrySuccess, params.address, params.checksumAddress, params.name, params.signature, params.timestamp])
+  }, [
+    isRegistrySuccess,
+    params.address,
+    params.checksumAddress,
+    params.name,
+    params.signature,
+    params.timestamp,
+  ])
 
   // auto run check process
   useEffect(() => {

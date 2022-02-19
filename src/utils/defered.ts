@@ -1,7 +1,7 @@
 export class Deffered {
-  readonly promise: Promise<boolean>;
-  private reject: (error: any) => void;
-  private resolve: (value: boolean) => void;
+  readonly promise: Promise<boolean>
+  private reject: (error: any) => void
+  private resolve: (value: boolean) => void
 
   constructor() {
     this.promise = new Promise((resolve, reject) => {
@@ -11,11 +11,10 @@ export class Deffered {
   }
 
   public success() {
-    return this.resolve(true);
+    return this.resolve(true)
   }
 
   public fail(e: any) {
     return this.reject(e)
   }
-
 }
