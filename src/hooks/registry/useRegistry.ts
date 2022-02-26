@@ -11,7 +11,11 @@ interface RegistryData {
 }
 
 function registry(data: RegistryData) {
-  return request.post('/authserver/authenticate', { ...data, agent: '' })
+  return request.post('/authserver/authenticate', {
+    agent: '',
+    reg: 1, // indicates that this is the login process
+    ...data
+  })
 }
 
 export const useRegistry = () => {
