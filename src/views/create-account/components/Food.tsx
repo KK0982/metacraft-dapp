@@ -2,23 +2,23 @@ import React, { FC, useCallback } from 'react'
 import Image from 'next/image'
 import SelectedIcon from '/public/views/auth/food-selected.svg'
 
-function foodPath(food: string) {
+function getFoodPath(food: string) {
   return '/foods/png_' + food + '.png'
 }
 
 const FOODS_PIC_MAP: Record<string, string> = {
-  apple: foodPath('apple'),
-  patato: foodPath('patato'),
-  bread: foodPath('bread'),
-  cake: foodPath('cake'),
-  carrot: foodPath('carrot'),
-  fish: foodPath('fish'),
-  cookie: foodPath('cookie'),
-  melon: foodPath('melon'),
-  pie: foodPath('pie'),
-  beef: foodPath('beef'),
-  chicken: foodPath('chicken'),
-  porkchop: foodPath('porkchop'),
+  apple: getFoodPath('apple'),
+  potato: getFoodPath('potato'),
+  bread: getFoodPath('bread'),
+  cake: getFoodPath('cake'),
+  carrot: getFoodPath('carrot'),
+  fish: getFoodPath('fish'),
+  cookie: getFoodPath('cookie'),
+  melon: getFoodPath('melon'),
+  pie: getFoodPath('pie'),
+  beef: getFoodPath('beef'),
+  chicken: getFoodPath('chicken'),
+  porkchop: getFoodPath('porkchop'),
 }
 
 interface FoodProps {

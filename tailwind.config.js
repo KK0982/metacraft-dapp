@@ -12,10 +12,10 @@ module.exports = {
         '2xl': '960px',
       },
     },
+    borderRadius: {
+      15: '3.75rem',
+    },
     extend: {
-      borderRadius: {
-        15: '3.75rem',
-      },
       colors: {
         f7f8fc: '#F7F8FC',
         '222f40': '#222F40',

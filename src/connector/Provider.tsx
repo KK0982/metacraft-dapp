@@ -50,7 +50,7 @@ export const Web3Provider = React.memo(({ children }) => {
   useEffect(() => {
     const instance = bncOnBoard({
       dappId: DAPP_ID,
-      networkId: 4,
+      networkId: 1,
       walletSelect: {
         wallets: wallets,
       },

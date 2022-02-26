@@ -16,7 +16,7 @@ interface FoodFieldProps {
 export const FoodField: FC<FoodFieldProps> = React.memo(
   ({ id, name, value, onChange, ...rest }) => {
     return (
-      <Field title="What is your favorite food?" name={name} validate={() => ''}>
+      <Field title="What is your favorite food?" name={name}>
         <Label>Food</Label>
         <Input
           className="w-[400px]"
@@ -35,7 +35,7 @@ export const FoodField: FC<FoodFieldProps> = React.memo(
           onChange={onChange}
         >
           <Food value="Apple" />
-          <Food value="Patato" />
+          <Food value="Potato" />
           <Food value="Bread" />
           <Food value="Cake" />
           <Food value="Carrot" />
