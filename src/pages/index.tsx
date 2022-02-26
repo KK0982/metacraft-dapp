@@ -157,7 +157,7 @@ const AuthSuccess = React.memo(() => {
         className="flex-shrink-0 flex-grow-0"
       />
       <Spacing y={32} />
-      <p className="text-24 leading-40">
+      <p className="text-24 leading-40 font-bold">
         Welcome to{' '}
         <span className="text-32 leading-40 text-2539f4">Metacraft</span>
       </p>
@@ -181,11 +181,11 @@ const RegistrySuccess = React.memo(() => {
         className="flex-shrink-0 flex-grow-0"
       />
       <Spacing y={27} />
-      <p className="text-24 leading-32">
+      <p className="text-24 leading-32 font-bold">
         Congratulations on your successful registration.
       </p>
       <Spacing y={24} />
-      <p className="text-24 leading-40">
+      <p className="text-24 leading-40 font-bold">
         Welcome to{' '}
         <span className="text-32 leading-40 text-2539f4">Metacraft</span>
       </p>

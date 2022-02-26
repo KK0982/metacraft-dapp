@@ -8,12 +8,12 @@ interface RegistryData {
   username?: string
   fruit?: string
   skin?: string
+  reg?: number, // indicates that this is the login process
 }
 
 function registry(data: RegistryData) {
   return request.post('/authserver/authenticate', {
     agent: '',
-    reg: 1, // indicates that this is the login process
     ...data
   })
 }
