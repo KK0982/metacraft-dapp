@@ -23,7 +23,7 @@ export const SkinPerview: FC<SkinPerviewProps> = ({ name, skin }) => {
 
     viewerRef.current = viewer
 
-    let control = skinview3d.createOrbitControls(viewer)
+    const control = skinview3d.createOrbitControls(viewer)
 
     control.enableRotate = true
     control.enableZoom = false

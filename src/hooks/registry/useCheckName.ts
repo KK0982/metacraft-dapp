@@ -1,5 +1,5 @@
 import { useRequest } from '@umijs/hooks'
-import request from '../../utils/request'
+import { request } from '@utils'
 
 function checkName(name: string) {
   return request.get(`/authserver/nameCheck?username=${name}`)

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useFormik } from 'formik'
-import { useCheckName } from '../../../hooks/registry/useCheckName'
+import { useCheckName } from '@hooks/registry/useCheckName'
 import * as yup from 'yup'
 import { debounce } from 'lodash'
 

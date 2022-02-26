@@ -1,5 +1,5 @@
 import { useRequest } from '@umijs/hooks'
-import request from '../../utils/request'
+import { request } from '@utils'
 
 interface RegistryData {
   timestamp: number

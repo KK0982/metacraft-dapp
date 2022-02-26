@@ -1,6 +1,6 @@
 import { useRequest } from '@umijs/hooks'
 import { useEffect } from 'react'
-import request from '../utils/request'
+import { request } from '@utils'
 
 async function getENS(address: string) {
   const result = await request.get(`/authserver/ensName?address=${address}`)

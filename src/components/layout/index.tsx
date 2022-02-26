@@ -10,3 +10,5 @@ export const Layout = ({ children }) => {
     </Root>
   )
 }
+
+export { Root, Header }

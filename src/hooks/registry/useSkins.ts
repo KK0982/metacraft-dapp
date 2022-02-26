@@ -1,6 +1,6 @@
 import { useRequest } from '@umijs/hooks'
 import { useEffect } from 'react'
-import request from '../../utils/request'
+import { request } from '@utils'
 
 function fetchSkins(address: string) {
   return request.get(`/nft/list/by/address?address=${address}`)

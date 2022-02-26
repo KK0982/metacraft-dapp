@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react'
-import { Spacing } from '../../../components/Spacing'
+import { Spacing } from '@components/Spacing'
 import { Title } from './Title'
 
 interface FieldProps {

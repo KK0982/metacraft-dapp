@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
-import { Spacing } from '../components/Spacing'
+import { Spacing } from '@components/Spacing'
 import { useRouter } from 'next/router'
-import { useAuth } from '../hooks/auth/useAuth'
-import { Container } from '../components/layout/Container'
-import { useCheckRegistry } from '../hooks/registry/useCheckRegistry'
-import { useNotification } from '../components/notifications'
-import { useActiveAccount } from '../connector'
-import { useRegistry } from '../hooks/registry/useRegistry'
+import { useAuth } from '@hooks/auth/useAuth'
+import { Container } from '@components/layout/Container'
+import { useCheckRegistry } from '@hooks/registry/useCheckRegistry'
+import { useNotification } from '@components/notifications'
+import { useActiveAccount } from '@connector'
+import { useRegistry } from '@hooks/registry/useRegistry'
 
 export const Auth = React.memo(() => {
   const router = useRouter()
@@ -61,8 +61,6 @@ export const Auth = React.memo(() => {
         signature,
         timestamp,
       })
-
-      console.log(registryResult)
 
       setAuthed(true)
       setTimeout(() => {

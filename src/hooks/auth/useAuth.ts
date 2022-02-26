@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import { useWeb3 } from '../../connector'
-import { useActiveAccount, useConnectReadyStatus } from '../../connector/hooks'
+import { useWeb3 } from '@connector'
+import { useActiveAccount, useConnectReadyStatus } from '@connector/hooks'
 
 export class NotConnectWalelt extends Error {
   constructor() {
@@ -24,7 +24,7 @@ export const useAuth = () => {
 
             const checksumAddress = web3.utils.toChecksumAddress(address)
             const timestamp = Math.floor(new Date().getTime() / 1000)
-            const messageForSign = `${checksumAddress}|${timestamp}`
+            const messageForSign = `Welcome to Metacraft\nI'm ${checksumAddress}\nLogin at ${timestamp}`;
 
             const signature = await (web3.eth.personal as any).sign(
               messageForSign,

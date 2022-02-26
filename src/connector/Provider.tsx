@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import React, { PropsWithChildren, useEffect, useMemo, useReducer, useState } from 'react'
 import Web3 from 'web3'
 import { Web3ProviderContext } from './context'
 import { Web3ProviderData } from './types'
 import bncOnBoard from 'bnc-onboard'
 import { API } from 'bnc-onboard/dist/src/interfaces'
-import { Deffered } from '../utils/defered'
-import { useNotification } from '../components/notifications'
+import { Deffered } from '@utils'
+import { useNotification } from '@components/notifications'
 
 type Action =
   | { type: 'set-web3'; data: Web3 }
@@ -36,24 +36,31 @@ const reducer = (state: Web3ProviderData, action: Action): Web3ProviderData => {
   }
 }
 
-const wallets = [
-  { walletName: 'metamask', preferred: true },
-  // { walletName: "walletConnect", preferred: true },
-  { walletName: 'opera', preferred: true },
-]
+const RPC_URL = ''
 
-export const Web3Provider = React.memo(({ children }) => {
+type Web3ProviderProps = PropsWithChildren<{
+  rpc: string,
+  appName: string;
+}>
+
+export const Web3Provider = React.memo<Web3ProviderProps>(({ rpc, appName, children }) => {
   const notification = useNotification()
   const [bncInstance, setBNCInstance] = useState<API>()
   const [state, dispatch] = useReducer(reducer, INIT_STATE)
+
+  const wallets = useMemo(() => [
+    { walletName: 'metamask', preferred: true },
+    // { walletName: "walletConnect", preferred: true },
+    { walletName: 'opera', preferred: true },
+    { walletName: "trust", preferred: true, rpcUrl: RPC_URL },
+    { walletName: 'keystone', rpcUrl: rpc, appName: appName, },
+  ], [rpc, appName])
 
   useEffect(() => {
     const instance = bncOnBoard({
       dappId: DAPP_ID,
       networkId: 1,
-      walletSelect: {
-        wallets: wallets,
-      },
+      walletSelect: { wallets },
       walletCheck: [
         { checkName: 'accounts' },
         { checkName: 'connect' },

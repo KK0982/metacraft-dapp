@@ -1,5 +1,5 @@
 import axios from 'axios'
 
-export default axios.create({
+export const request = axios.create({
   baseURL: 'https://api.test.metacraft.cc',
 })

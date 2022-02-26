@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react'
-import { Label } from '../../../components/form/Label'
-import { Input } from '../../../components/Input'
-import { TagGroup } from '../../../components/form/Tag'
-import { Spacing } from '../../../components/Spacing'
+import { Label } from '@components/form/Label'
+import { Input } from '@components/Input'
+import { TagGroup } from '@components/form/Tag'
+import { Spacing } from '@components/Spacing'
 import { Field } from './Field'
 import { Food } from './Food'
 

@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useEffect, useMemo } from 'react'
 import { Field } from './Field'
-import { SkinPerview } from '../../../components/SkinPerview'
-import { useSkins } from '../../../hooks/registry/useSkins'
-import { useActiveAccount } from '../../../connector'
+import { SkinPerview } from '@components/SkinPerview'
+import { useSkins } from '@hooks/registry/useSkins'
+import { useActiveAccount } from '@connector'
 import Image from 'next/image'
 
 const ItemTitle = React.memo(({ children }) => {
