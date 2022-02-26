@@ -18,33 +18,31 @@ export default React.memo(() => {
   const { run: registry, loading } = useRegistry()
   const auth = useAuth()
   const router = useRouter()
-  const notification = useNotification();
+  const notification = useNotification()
 
   const handleRegistry = useMemo(
     () => async () => {
-      const errors = await form.validateForm()
+      try {
+        const errors = await form.validateForm()
 
-      if (errors.name || errors.food || !auth) {
-        notification.show({
-          type: 'failed',
-          title: errors.name || errors.food
-        });
+        if (errors.name || errors.food || !auth) {
+          throw new Error(errors?.name || errors?.food)
+        }
 
-        return;
-      }
+        const authResult = await auth()
 
-      const authResult = await auth()
+        const result = await registry({
+          address: authResult.checksumAddress,
+          signature: authResult.signature,
+          timestamp: Number(authResult.timestamp),
+          username: form.values.name,
+          fruit: form.values.food,
+          skin: skin.name || 'default_1',
+        })
 
-      const result = await registry({
-        address: authResult.checksumAddress,
-        signature: authResult.signature,
-        timestamp: Number(authResult.timestamp),
-        username: form.values.name,
-        fruit: form.values.food,
-        skin: skin.name || 'default_1',
-      })
+        if (result?.data?.errorMessage)
+          throw new Error(result.data.errorMessage)
 
-      if (result.status === 200 && result.data.accessToken) {
         form.resetForm()
 
         const searchParams = new URLSearchParams({
@@ -58,6 +56,11 @@ export default React.memo(() => {
 
         // jump back to index page with login params
         router.replace(`/?${searchParams.toString()}`)
+      } catch (e) {
+        notification.show({
+          type: 'error',
+          content: e.toString(),
+        })
       }
     },
     [auth, router, registry, form, skin]

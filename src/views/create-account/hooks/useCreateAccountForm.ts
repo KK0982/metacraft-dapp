@@ -8,12 +8,12 @@ export function useCreateAccountForm() {
   const { run: checkNameFn } = useCheckName()
   const checkName = useMemo(() => {
     return async (value: string) => {
-      if (!value) return true 
+      if (!value) return true
 
       const result = await checkNameFn(value)
 
       if (result?.data?.['name_can_use'] === false) {
-        return false;
+        return false
       }
 
       return true
@@ -42,15 +42,12 @@ export function useCreateAccountForm() {
 
   const debouncedValidate = useMemo(
     () => debounce(formik.validateForm, 500),
-    [formik.validateForm],
-  );
+    [formik.validateForm]
+  )
 
-  useEffect(
-    () => {
-      debouncedValidate(formik.values);
-    },
-    [formik.values, debouncedValidate],
-  );
+  useEffect(() => {
+    debouncedValidate(formik.values)
+  }, [formik.values, debouncedValidate])
 
   return formik
 }

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 
-export type NotificationType = 'info' | 'success' | 'failed' | 'loading'
+export type NotificationType = 'info' | 'success' | 'error' | 'loading'
 
 export interface NotificationData {
   // uuid for notification

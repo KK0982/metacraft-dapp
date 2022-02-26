@@ -52,28 +52,40 @@ export const Auth = React.memo(() => {
       }
 
       // if don't need regist, call auth process
-      notification.show({ type: 'info', content: 'auth start' })
+      notification.show({ type: 'loading', content: 'auth start' })
 
-      const authResult = await auth()
-      const { address, checksumAddress, timestamp, signature } = authResult
-      const registryResult = await registry({
-        address: checksumAddress,
-        signature,
-        timestamp,
-      })
+      try {
+        const authResult = await auth()
 
-      setAuthed(true)
-      setTimeout(() => {
-        const searchParams = new URLSearchParams({
-          name: registryResult?.data?.selectedProfile?.name,
-          address,
-          checksumAddress: checksumAddress,
-          timestamp: String(timestamp),
+        const { address, checksumAddress, timestamp, signature } = authResult
+
+        const registryResult = await registry({
+          address: checksumAddress,
           signature,
+          timestamp,
         })
 
-        window.open(`metacraft://?${searchParams.toString()}`)
-      }, 1000)
+        if (registryResult?.data?.error)
+          throw new Error(registryResult?.data?.errorMessage || 'Unknown Error')
+
+        setAuthed(true)
+        setTimeout(() => {
+          const searchParams = new URLSearchParams({
+            name: registryResult?.data?.selectedProfile?.name,
+            address,
+            checksumAddress: checksumAddress,
+            timestamp: String(timestamp),
+            signature,
+          })
+
+          window.open(`metacraft://?${searchParams.toString()}`)
+        }, 1000)
+      } catch (e) {
+        notification.show({
+          type: 'error',
+          content: e.toString(),
+        })
+      }
     },
     [authed, auth, checkRegistry, activeAccount, notification, registry, router]
   )

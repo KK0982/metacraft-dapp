@@ -30,29 +30,29 @@ export const NameField: FC<NameFieldProps> = React.memo(
     const checkName = useMemo(() => {
       console.log('??')
       return debounce(async (value: string) => {
-        let error: string;
-  
+        let error: string
+
         const result = await checkNameFn(value)
-  
+
         if (result?.status !== 200) {
           error = 'check name failed'
         }
-  
+
         if (result?.data?.['name_can_use'] === false) {
           error = 'This nickname has already been used'
         }
-  
+
         if (error) {
-          onError(error);
+          onError(error)
         }
-      }, 500);
+      }, 500)
     }, [])
 
     useEffect(() => {
-      if (!value) return;
+      if (!value) return
 
       // checkName(value);
-    }, [value]);
+    }, [value])
 
     return (
       <Field title="What do you want people to call you?" name={name}>

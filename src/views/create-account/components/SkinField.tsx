@@ -17,7 +17,7 @@ const DEFAULT_SKINS = [
   {
     name: 'Steve',
     skin: '/skins/Default_Steve_Skin.png',
-  }
+  },
 ]
 
 export interface Skin {

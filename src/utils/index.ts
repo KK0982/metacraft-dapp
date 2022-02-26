@@ -1,2 +1,2 @@
-export * from './defered';
-export * from './request';
+export * from './defered'
+export * from './request'

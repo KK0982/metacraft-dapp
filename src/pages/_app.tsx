@@ -10,10 +10,7 @@ import { APP_NAME, RPC_URL } from '@configs'
 function MyApp({ Component, pageProps }) {
   return (
     <NotificationProvider>
-      <Web3Provider
-        appName={APP_NAME}
-        rpc={RPC_URL}
-      >
+      <Web3Provider appName={APP_NAME} rpc={RPC_URL}>
         <ReduxProvider store={store}>
           <Head>
             <title>Metacraft</title>

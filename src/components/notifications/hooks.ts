@@ -57,7 +57,7 @@ export function useNotificationEnv() {
 }
 
 type NotificationConfig = Partial<NotificationData>
-const DEFAULT_DURATION = 3000
+const DEFAULT_DURATION = 4000
 
 export function useNotification() {
   const { dispatch } = useContext(NotificationContextRoot)
