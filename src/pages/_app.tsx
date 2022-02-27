@@ -6,8 +6,16 @@ import '@styles/global.css'
 import { store } from '@state'
 import { Web3Provider } from '@connector'
 import { APP_NAME, RPC_URL } from '@configs'
+import { useRouter } from 'next/router'
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter()
+
+  console.log(router.pathname)
+  if (router.pathname === '/preview-skin') {
+    return <Component {...pageProps} />
+  }
+
   return (
     <NotificationProvider>
       <Web3Provider appName={APP_NAME} rpc={RPC_URL}>

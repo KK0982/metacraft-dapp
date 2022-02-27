@@ -5,11 +5,8 @@ import { Tag, TagGroup } from '@components/form/Tag'
 import { useENS } from '@hooks/useENS'
 import { Spacing } from '@components/Spacing'
 import { Field } from './Field'
-import { useCreateAccountForm } from '@hooks/useCreateAccountForm'
 import { FormError } from '@components/form/FormError'
 import { useActiveAccount } from '@connector'
-import { debounce } from 'lodash'
-import { useCheckName } from '@hooks/registry/useCheckName'
 
 interface NameFieldProps {
   error: string
